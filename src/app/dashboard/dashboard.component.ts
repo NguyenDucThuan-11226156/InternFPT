@@ -32,5 +32,16 @@ export class DashboardComponent {
       }
     );
   }
+  updateUser(id1: string, data: any) {
+    this.https.put(`http://localhost:3000/updateUser/${id1}`, data).subscribe(
+      (response) => {
+        console.log('Success update');
+        this.getUsers();
+      },
+      (error) => {
+        console.error('Error:', error);
+      }
+    );
+  }
   
 }

@@ -19,6 +19,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UnsuccessDialogComponent } from './unsuccess-dialog/unsuccess-dialog.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     SuccessDialogComponent,
     UnsuccessDialogComponent,
     DashboardComponent,
+    EditUserComponent,
   ],
   imports: [
     BrowserModule,

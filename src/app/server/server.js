@@ -101,6 +101,9 @@ app.delete('/deleteUser/:id', async (req, res) => {
       res.status(500).json({ message: 'Internal server error' });
     });
 });
+app.put('/user/:id',async(req,res)=>{
+  
+})
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

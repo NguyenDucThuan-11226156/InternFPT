@@ -39,7 +39,6 @@ export class LoginComponent {
   
     openUnSuccessDialog(){
     const dialogRef = this.dialog.open(UnsuccessDialogComponent);
-
     }
   
 }
