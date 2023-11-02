@@ -1,0 +1,30 @@
+<!-- <p>Form works!</p>
+<form (ngSubmit)="onSubmit(formSignIn)" #formSignIn="ngForm">
+    <input type="email" name="email" id="email" ngModel #txtEmail="ngModel" placeholder="Enter email" required email>
+    <br>
+    <p *ngIf="txtEmail.errors?.['required'] && txtEmail.touched">Email is required</p>
+    <p *ngIf="!txtEmail.valid && !txtEmail.errors?.['required']">Email is not valid</p>
+    <input type="password" name="password" ngModel id="password" required>
+    <br>
+    <button [disabled]="!formSignIn.valid">Submit</button>
+</form>
+
+<!-- <div class="card">
+    <div class="card-header">
+      You have selected
+      <ng-container [ngTemplateOutlet]="counterTmpl"></ng-container>.
+    </div>
+    <div class="card-body">
+      There are <ng-container [ngTemplateOutlet]="counterTmpl"></ng-container> was
+      selected.
+    </div>
+    <div class="card-footer">
+      You have selected
+      <ng-container [ngTemplateOutlet]="counterTmpl"></ng-container>.
+    </div>
+  </div>
+  
+  <ng-template #counterTmpl>
+    <span class="badge badge-primary">{{ counter }}</span> items
+  </ng-template> -->
+ -->

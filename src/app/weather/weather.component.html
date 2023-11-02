@@ -1,0 +1,47 @@
+ <!-- <h3>hello</h3>
+
+<p>weather works!</p>
+<button (click)="handle()">Tim</button>
+<h1>Quoc gia : </h1>
+<h1>Nhiet do : </h1> -->
+<!-- <form (click)="submit(formsubmit)" #formsubmit ="ngForm">
+    <input type="email" placeholder="Enter your email" name="email" [(ngModel)]="email" >
+    <br>
+    <input type="password" placeholder="Enter your password" name="password" [(ngModel)]="password">
+    <br>
+    <input type="submit" value="submit">
+</form>  -->
+ <body *ngIf="temp >=20" class="hot">
+    <div id="weatherhot" >
+    <input (keydown)="handle($event)" class="search" type="text" placeholder="" name="" id="" [(ngModel)]="countryNG"
+    [ngStyle]="">
+        <div class="content">
+            <h1 class="capital">
+                <span class="country">{{country}}</span>
+            </h1>
+            <div id="clock"class="time"><p>{{ currentTime }}</p>
+            </div>
+            <div class="temperature">
+                <span class="value">{{temp}}<sup>o</sup>C</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+<body *ngIf="temp <20" class="cold">
+    <div id="weathercold" >
+        <input (keydown)="handle($event)" class="search" type="text" placeholder="" name="" id="" [(ngModel)]="countryNG"
+        >
+            <div class="content">
+                <h1 class="capital">
+                    <span class="country">{{country}}</span>
+                </h1>
+                <div id="clock"class="time"><p>{{ currentTime }}</p>
+                </div>
+                <div class="temperature">
+                    <span class="value">{{temp}}<sup>o</sup>C</span>
+                </div>
+            </div>
+        </div>
+</body> 
+
