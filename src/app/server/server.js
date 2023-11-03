@@ -91,7 +91,6 @@ app.get('/getApi', async (req, res) => {
 });
 app.delete('/deleteUser/:id', async (req, res) => {
   const userId = req.params.id;
-  console.log(user)
   Users.deleteOne({ _id: userId })
     .then(() => {
       res.json({ message: 'User deleted successfully' });
@@ -104,7 +103,6 @@ app.delete('/deleteUser/:id', async (req, res) => {
 app.put('/userEdit/:id', async (req, res) => {
   const userId = req.params.id;
   const newPassword = req.body.password;
-
   try {
     const updatedUser = await Users.findOneAndUpdate(
       { _id: userId },

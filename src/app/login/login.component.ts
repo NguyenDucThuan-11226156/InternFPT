@@ -15,12 +15,10 @@ export class LoginComponent {
 
   confirmUsers() {
     const userData = { email: this.email, password: this.password };
-
     this.http.post('http://localhost:3000/success', userData).subscribe(
       (response) => {
         // Handle the response from the server (e.g., registration success or failure)
         console.log('Response:', response);
-
         // Assuming a successful login response is received, open the success dialog
         this.openSuccessDialog();
       },
