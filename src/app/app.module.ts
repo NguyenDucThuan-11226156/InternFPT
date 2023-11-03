@@ -21,6 +21,7 @@ import { UnsuccessDialogComponent } from './unsuccess-dialog/unsuccess-dialog.co
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { EditSuccessComponent } from './edit-success/edit-success.component';
+import { SuccessLoginComponent } from './success-login/success-login.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { EditSuccessComponent } from './edit-success/edit-success.component';
     DashboardComponent,
     EditUserComponent,
     EditSuccessComponent,
+    SuccessLoginComponent,
   ],
   imports: [
     BrowserModule,

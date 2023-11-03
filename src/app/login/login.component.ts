@@ -12,7 +12,6 @@ export class LoginComponent {
   constructor(private http: HttpClient, private dialog: MatDialog) {}
   email: string = '';
   password: string = '';
-
   confirmUsers() {
     const userData = { email: this.email, password: this.password };
     this.http.post('http://localhost:3000/success', userData).subscribe(

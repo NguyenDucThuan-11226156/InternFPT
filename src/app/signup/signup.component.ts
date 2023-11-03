@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { EmailValidator, FormBuilder, Validators } from '@angular/forms';
+import { SuccessLoginComponent } from '../success-login/success-login.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -10,7 +12,7 @@ export class SignupComponent {
   email: any = '';
   username: any = '';
   password: any = '';
-  constructor(private http: HttpClient, private fb: FormBuilder) {}
+  constructor(private http: HttpClient, private fb: FormBuilder, private dialog:MatDialog) {}
   infoUser = this.fb.group({
     "username":[""],
     "email":["",[Validators.email,Validators.required]],
@@ -29,13 +31,18 @@ export class SignupComponent {
     this.http.post('http://localhost:3000/register', userData).subscribe(
       (response) => {
         // Handle the response from the server (e.g., registration success or failure)
-        console.log('Response:', response);
         
+        console.log('Response:', response);
+        this.openSuccessRegisterDialog();
       },
       (error) => {
         console.error('Error:', error);
       }
     );
+  }
+  openSuccessRegisterDialog() {
+    const dialogRef = this.dialog.open(SuccessLoginComponent);
+    // Optionally, you can handle events from the dialog, such as when it's closed
   }
 
   
