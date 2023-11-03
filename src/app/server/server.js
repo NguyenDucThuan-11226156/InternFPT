@@ -101,9 +101,28 @@ app.delete('/deleteUser/:id', async (req, res) => {
       res.status(500).json({ message: 'Internal server error' });
     });
 });
-app.put('/user/:id',async(req,res)=>{
-  
-})
+app.put('/userEdit/:id', async (req, res) => {
+  const userId = req.params.id;
+  const newPassword = req.body.password;
+
+  try {
+    const updatedUser = await Users.findOneAndUpdate(
+      { _id: userId },
+      { password1: newPassword }, // Use the new password directly
+      { new: true }
+    );
+
+    if (updatedUser) {
+      res.json({ message: 'Update successful', user: updatedUser });
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
