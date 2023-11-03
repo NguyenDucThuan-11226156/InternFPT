@@ -20,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UnsuccessDialogComponent } from './unsuccess-dialog/unsuccess-dialog.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
+import { EditSuccessComponent } from './edit-success/edit-success.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { EditUserComponent } from './edit-user/edit-user.component';
     UnsuccessDialogComponent,
     DashboardComponent,
     EditUserComponent,
+    EditSuccessComponent,
   ],
   imports: [
     BrowserModule,

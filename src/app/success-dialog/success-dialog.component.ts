@@ -7,5 +7,4 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./success-dialog.component.scss']
 })
 export class SuccessDialogComponent {
-  
 }
