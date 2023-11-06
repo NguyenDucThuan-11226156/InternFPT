@@ -59,7 +59,6 @@ app.post('/register', async (req, res) => {
     });
   res.json({ message: 'Received data on the server' });
 });
-
 //login
 //login
 app.post('/success', async (req, res) => {
@@ -70,6 +69,7 @@ app.post('/success', async (req, res) => {
     .then(data => {
       if (data.length > 0) {
         res.json({ message: 'Dang nhap thanh cong' });
+        res.redirect('/dashboard');
       } else {
         res.status(401).json({ message: 'Dang nhap that bai' });
       }
@@ -120,8 +120,6 @@ app.put('/userEdit/:id', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
-
-
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

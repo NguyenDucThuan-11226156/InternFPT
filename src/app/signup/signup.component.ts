@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { EmailValidator, FormBuilder, Validators } from '@angular/forms';
 import { SuccessLoginComponent } from '../success-login/success-login.component';
 import { MatDialog } from '@angular/material/dialog';
+import { LoginComponent } from '../login/login.component';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -41,7 +42,7 @@ export class SignupComponent {
     );
   }
   openSuccessRegisterDialog() {
-    const dialogRef = this.dialog.open(SuccessLoginComponent);
+    const dialogRef = this.dialog.open(LoginComponent);
     // Optionally, you can handle events from the dialog, such as when it's closed
   }
 
