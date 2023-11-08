@@ -22,6 +22,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { EditSuccessComponent } from './edit-success/edit-success.component';
 import { SuccessLoginComponent } from './success-login/success-login.component';
+import { DashboardUserComponent } from './dashboard-user/dashboard-user.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { SuccessLoginComponent } from './success-login/success-login.component';
     EditUserComponent,
     EditSuccessComponent,
     SuccessLoginComponent,
+    DashboardUserComponent,
   ],
   imports: [
     BrowserModule,
