@@ -6,13 +6,15 @@ import { WeatherComponent } from "./weather/weather.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { EditUserComponent } from "./edit-user/edit-user.component";
 import { DashboardUserComponent } from "./dashboard-user/dashboard-user.component";
+import { AdminGuard } from "./admin.guard";
+import { UserGuard } from "./user.guard";
 const routes: Routes = [ // Use a colon (:) to declare the type of 'routes'
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignupComponent },
     { path: '', redirectTo:'login', pathMatch:'full'},
     { path: 'weather', component: WeatherComponent },
-    { path: 'dashboardAdmin', component: DashboardComponent },
-    { path: 'dashboardUser', component: DashboardUserComponent },
+    { path: 'dashboardAdmin', component: DashboardComponent,canActivate:[AdminGuard] },
+    { path: 'dashboardUser', component: DashboardUserComponent, canActivate:[UserGuard] },
     { path: 'user/:id', component: EditUserComponent },
 ];
 @NgModule({

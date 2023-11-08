@@ -19,7 +19,6 @@ export class DashboardUserComponent {
       }
     );
   }
-  
   // updateUser(id1: string, data: any) {
   //   this.https.put(`http://localhost:3000/updateUser/${id1}`, data).subscribe(
   //     (response: any) => {

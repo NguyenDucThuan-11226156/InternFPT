@@ -40,6 +40,51 @@ const userSchema = new Schema({
   collection: 'account'
 });
 const Users = mongoose.model('Users', userSchema);
+var checkUser = async (req, res, next) => {
+  try {
+    const role = req.data.role;
+    if (role === 'user' || role === 'admin') {
+      next();
+    } else {
+      return res.json("NOT PERMISSION");
+    }
+  } catch (err) {
+    return res.status(500).json("Loi user");
+  }
+};
+var checkAdmin = async (req, res, next) => {
+  try {
+    const role = req.data.role;
+    if (role == 'admin') {
+      next();
+    } else {
+      return res.json("NOT PERMISSION");
+    }
+  } catch (err) {
+    return res.status(500).json("Loi user");
+  }
+};
+app.post('/login', (req,res,next)=>{
+  Users.find({
+    email: req.body.email,
+    password1: req.body.password,
+  })
+    .then(data => {
+      if (data.length > 0) {
+        console.log('User data:', data[0].role)
+        var token = jwt.sign({ _id: data[0]._id, role: data[0].role }, 'mk');
+        console.log('hello')
+        res.json({ "message": 'Dang nhap success', "token": token });
+        next()
+      } else {
+        return res.status(401).json({ message: 'Dang nhap that bai' });
+      }
+    })
+    .catch(err => {
+      console.log('Thất bại', err);
+      return res.status(500).json({ message: 'Internal server error' });
+    });
+})
 var checkLogin = async (req,res,next) =>{
   try{
     var token = req.cookies.token;
@@ -67,52 +112,6 @@ var checkLogin = async (req,res,next) =>{
     return res.status(500).json("Loi user");
   }
 }
-var checkUser = async (req, res, next) => {
-  try {
-    const role = req.data.role;
-    if (role === 'user' || role === 'admin') {
-      next();
-    } else {
-      return res.json("NOT PERMISSION");
-    }
-  } catch (err) {
-    return res.status(500).json("Loi user");
-  }
-};
-var checkAdmin = async (req, res, next) => {
-  try {
-    const role = req.data.role;
-    if (role == 'admin') {
-      next();
-    } else {
-      return res.json("NOT PERMISSION");
-    }
-  } catch (err) {
-    return res.status(500).json("Loi user");
-  }
-};
-
-app.post('/login', (req,res,next)=>{
-  Users.find({
-    email: req.body.email,
-    password1: req.body.password,
-  })
-    .then(data => {
-      if (data.length > 0) {
-        var token = jwt.sign({ _id: data._id }, 'mk');
-        res.cookie('token', token, { httpOnly: true });
-        console.log('hello')
-        res.json({ "message": 'Dang nhap success', "token": token });
-        next()
-      } else {
-        return res.status(401).json({ message: 'Dang nhap that bai' });
-      }
-    })
-    .catch(err => {
-      console.log('Thất bại', err);
-      return res.status(500).json({ message: 'Internal server error' });
-    });
-})
 app.get('/dashboardUser', checkLogin, checkUser, (req, res,next) => {
   console.log("Thanh Cong User");
 });

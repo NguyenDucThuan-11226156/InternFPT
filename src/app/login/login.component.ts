@@ -5,11 +5,13 @@ import { SuccessDialogComponent } from '../success-dialog/success-dialog.compone
 import { UnsuccessDialogComponent } from '../unsuccess-dialog/unsuccess-dialog.component';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+
 // Define an interface for the response structure
 interface LoginResponse {
   message: string;
   token: string;
 }
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -31,7 +33,7 @@ export class LoginComponent implements OnInit {
     const userData = { email: this.email, password: this.password };
     this.http.post<LoginResponse>('http://localhost:3000/login', userData).subscribe(
       (response) => {
-        // console.log('response:', response);
+        console.log('response:', response);
         let token = response.token;
         this.cookieService.set('token', token);
         // Save email and password to sessionStorage
@@ -46,6 +48,7 @@ export class LoginComponent implements OnInit {
       }
     );
   }
+
   openSuccessDialog() {
     const dialogRef = this.dialog.open(SuccessDialogComponent);
   }

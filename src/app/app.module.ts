@@ -23,6 +23,9 @@ import { EditUserComponent } from './edit-user/edit-user.component';
 import { EditSuccessComponent } from './edit-success/edit-success.component';
 import { SuccessLoginComponent } from './success-login/success-login.component';
 import { DashboardUserComponent } from './dashboard-user/dashboard-user.component';
+import { AuthService } from './auth.service';
+import { UserGuard } from './user.guard';
+import { AdminGuard } from './admin.guard';
 
 @NgModule({
   declarations: [
@@ -52,7 +55,7 @@ import { DashboardUserComponent } from './dashboard-user/dashboard-user.componen
     BrowserAnimationsModule,
     MatDialogModule
   ],
-  providers: [WeatherService],
+  providers: [WeatherService,AuthService,UserGuard,AdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
