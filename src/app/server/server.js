@@ -6,7 +6,6 @@ const bcrypt = require('bcrypt'); // Import the bcrypt library
 const bodyParser = require('body-parser')
 var cookieParser = require('cookie-parser')
 app.use(cookieParser())
-
 const mongoose = require('mongoose');
 var jwt = require('jsonwebtoken');
 const { Schema } = mongoose; // Import the Schema object
@@ -31,7 +30,6 @@ mongoose.connect('mongodb://127.0.0.1:27017/Test1', {
 .catch(err => {
   console.error("Failed to connect to the database:", err);
 });
-
 const userSchema = new Schema({
   username: String,
   email: String,
@@ -42,10 +40,13 @@ const userSchema = new Schema({
   collection: 'account'
 });
 const Users = mongoose.model('Users', userSchema);
- var checkLogin = async (req,res,next) =>{
+var checkLogin = async (req,res,next) =>{
   try{
-    console.log(req);
-    // console.log(token);
+    var token = req.cookies.token;
+    console.log("da o login")
+    if (!token) {
+      return res.status(401).json("Token is missing");
+    }
     var idUser = jwt.verify(token,'mk');
     Users.findOne({
       _id : idUser
@@ -69,7 +70,7 @@ const Users = mongoose.model('Users', userSchema);
 var checkUser = async (req, res, next) => {
   try {
     const role = req.data.role;
-    if (role == 'user') {
+    if (role === 'user' || role === 'admin') {
       next();
     } else {
       return res.json("NOT PERMISSION");
@@ -78,7 +79,6 @@ var checkUser = async (req, res, next) => {
     return res.status(500).json("Loi user");
   }
 };
-
 var checkAdmin = async (req, res, next) => {
   try {
     const role = req.data.role;
@@ -100,8 +100,8 @@ app.post('/login', (req,res,next)=>{
     .then(data => {
       if (data.length > 0) {
         var token = jwt.sign({ _id: data._id }, 'mk');
-        req.data = data;
-        console.log("req:data" ,req.data)
+        res.cookie('token', token, { httpOnly: true });
+        console.log('hello')
         res.json({ "message": 'Dang nhap success', "token": token });
         next()
       } else {
@@ -113,10 +113,10 @@ app.post('/login', (req,res,next)=>{
       return res.status(500).json({ message: 'Internal server error' });
     });
 })
-app.get('/dashboard', checkLogin,checkUser, (req, res) => {
+app.get('/dashboardUser', checkLogin, checkUser, (req, res,next) => {
   console.log("Thanh Cong User");
 });
-app.get('/dashboardAdmin', checkLogin, checkAdmin, (req, res) => {
+app.get('/dashboardAdmin', checkLogin, checkAdmin, (req, res,next) => {
   console.log("Thanh Cong Admin");
 });
 //register

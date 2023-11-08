@@ -5,13 +5,11 @@ import { SuccessDialogComponent } from '../success-dialog/success-dialog.compone
 import { UnsuccessDialogComponent } from '../unsuccess-dialog/unsuccess-dialog.component';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-
 // Define an interface for the response structure
 interface LoginResponse {
   message: string;
   token: string;
 }
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -48,7 +46,6 @@ export class LoginComponent implements OnInit {
       }
     );
   }
-
   openSuccessDialog() {
     const dialogRef = this.dialog.open(SuccessDialogComponent);
   }
