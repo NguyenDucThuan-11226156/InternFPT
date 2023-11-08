@@ -85,45 +85,46 @@ app.post('/login', (req,res,next)=>{
       return res.status(500).json({ message: 'Internal server error' });
     });
 })
-var checkLogin = async (req,res,next) =>{
-  try{
-    var token = req.cookies.token;
-    console.log("da o login")
-    if (!token) {
-      return res.status(401).json("Token is missing");
-    }
-    var idUser = jwt.verify(token,'mk');
-    Users.findOne({
-      _id : idUser
-    }).then(data=>{
-      if(data)
-      { 
-        req.data = data;
-        next()
-      }
-      else{
-        res.json("Khong tim thay user")
-      }
-    }).catch(err=>{
-      console.log(err);
-    })
-  }catch(err)
-  {
-    return res.status(500).json("Loi user");
-  }
-}
-app.get('/dashboardUser', checkLogin, checkUser, (req, res,next) => {
-  console.log("Thanh Cong User");
-});
-app.get('/dashboardAdmin', checkLogin, checkAdmin, (req, res,next) => {
-  console.log("Thanh Cong Admin");
-});
+// var checkLogin = async (req,res,next) =>{
+//   try{
+//     var token = req.cookies.token;
+//     console.log("da o login")
+//     if (!token) {
+//       return res.status(401).json("Token is missing");
+//     }
+//     var idUser = jwt.verify(token,'mk');
+//     Users.findOne({
+//       _id : idUser
+//     }).then(data=>{
+//       if(data)
+//       { 
+//         req.data = data;
+//         next()
+//       }
+//       else{
+//         res.json("Khong tim thay user")
+//       }
+//     }).catch(err=>{
+//       console.log(err);
+//     })
+//   }catch(err)
+//   {
+//     return res.status(500).json("Loi user");
+//   }
+// }
+// app.get('/dashboardUser', checkLogin, checkUser, (req, res,next) => {
+//   console.log("Thanh Cong User");
+// });
+// app.get('/dashboardAdmin', checkLogin, checkAdmin, (req, res,next) => {
+//   console.log("Thanh Cong Admin");
+// });
 //register
 app.post('/register', async (req, res) => {
   Users.create({
     username: req.body.username,
     email: req.body.email,
     password1: req.body.password,
+    role: 'user'
   })
     .then(data => {
       console.log("Thành công");

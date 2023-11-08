@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { jwtDecode } from "jwt-decode";
-
 @Injectable({
   providedIn: 'root',
 })
