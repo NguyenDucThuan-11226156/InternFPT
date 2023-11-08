@@ -31,10 +31,9 @@ export class LoginComponent implements OnInit {
 
   confirmUsers() {
     const userData = { email: this.email, password: this.password };
-
-    this.http.post<LoginResponse>('http://localhost:3000/userSuccess', userData).subscribe(
+    this.http.post<LoginResponse>('http://localhost:3000/login', userData).subscribe(
       (response) => {
-        console.log('response:', response);
+        // console.log('response:', response);
         let token = response.token;
         this.cookieService.set('token', token);
         // Save email and password to sessionStorage

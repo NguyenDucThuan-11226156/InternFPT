@@ -42,8 +42,57 @@ const userSchema = new Schema({
   collection: 'account'
 });
 const Users = mongoose.model('Users', userSchema);
+ var checkLogin = async (req,res,next) =>{
+  try{
+    console.log(req);
+    // console.log(token);
+    var idUser = jwt.verify(token,'mk');
+    Users.findOne({
+      _id : idUser
+    }).then(data=>{
+      if(data)
+      { 
+        req.data = data;
+        next()
+      }
+      else{
+        res.json("Khong tim thay user")
+      }
+    }).catch(err=>{
+      console.log(err);
+    })
+  }catch(err)
+  {
+    return res.status(500).json("Loi user");
+  }
+}
+var checkUser = async (req, res, next) => {
+  try {
+    const role = req.data.role;
+    if (role == 'user') {
+      next();
+    } else {
+      return res.json("NOT PERMISSION");
+    }
+  } catch (err) {
+    return res.status(500).json("Loi user");
+  }
+};
 
-var checkLogin = async (req,res,next) =>{
+var checkAdmin = async (req, res, next) => {
+  try {
+    const role = req.data.role;
+    if (role == 'admin') {
+      next();
+    } else {
+      return res.json("NOT PERMISSION");
+    }
+  } catch (err) {
+    return res.status(500).json("Loi user");
+  }
+};
+
+app.post('/login', (req,res,next)=>{
   Users.find({
     email: req.body.email,
     password1: req.body.password,
@@ -63,56 +112,15 @@ var checkLogin = async (req,res,next) =>{
       console.log('Thất bại', err);
       return res.status(500).json({ message: 'Internal server error' });
     });
-}
-var checkUser = async(req,res,next)=>{
-  try{
-    const role = req.data.role
-    console.log(role);
-    if(role =='user' || role =='admin')
-    {
-      next();
-    } 
-    else {
-      return res.json("NOT PERMISSION");
-    }
-  }
-  catch(err){
-    return res.status(500).json("Loi user");
-  }
-}
-var checkAdmin = async (req,res,next)=>{
-  try{
-    const role = req.data.role
-    if(role =='admin')
-    {
-      next();
-    } 
-    else {
-      return res.json("NOT PERMISSION");
-    }
-  }
-  catch(err){
-    return res.status(500).json("Loi user");
-  }
-}
-app.post('/userSuccess', checkLogin, (req, res) => {
-
+})
+app.get('/dashboard', checkLogin,checkUser, (req, res) => {
   console.log("Thanh Cong User");
-  // You can add your route logic here for the user success route
 });
-
-app.post('/adminSuccess', checkLogin, checkAdmin, (req, res) => {
+app.get('/dashboardAdmin', checkLogin, checkAdmin, (req, res) => {
   console.log("Thanh Cong Admin");
-  // You can add your route logic here for the admin success route
 });
-
 //register
 app.post('/register', async (req, res) => {
-  // const { username, password } = req.body;
-  // console.log(req.body);
-  // Process the username and password data as needed
-  // console.log(`Received username: ${username}, password: ${password}`);
-  // You can add authentication logic here and send appropriate responses
   Users.create({
     username: req.body.username,
     email: req.body.email,
@@ -127,25 +135,6 @@ app.post('/register', async (req, res) => {
     });
   res.json({ message: 'Received data on the server' });
 });
-//login
-// app.post('/success', async (req, res) => {
-//   Users.find({
-//     email: req.body.email,
-//     password1: req.body.password,
-//   })
-//     .then(data => {
-//       if (data.length > 0) {
-//         res.json({ message: 'Dang nhap thanh cong' });
-//         res.redirect('/dashboard');
-//       } else {
-//         res.status(401).json({ message: 'Dang nhap that bai' });
-//       }
-//     })
-//     .catch(err => {
-//       console.log('Thất bại', err);
-//       res.status(500).json({ message: 'Internal server error' });
-//     });
-// });
 app.get('/getApi', async (req, res) => {
   Users.find({})
     .then(data => {

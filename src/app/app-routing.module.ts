@@ -11,7 +11,7 @@ const routes: Routes = [ // Use a colon (:) to declare the type of 'routes'
     { path: 'signup', component: SignupComponent },
     { path: '', redirectTo:'login', pathMatch:'full'},
     { path: 'weather', component: WeatherComponent },
-    { path: 'dashboard', component: DashboardComponent },
+    { path: 'dashboardAdmin', component: DashboardComponent },
     { path: 'dashboardUser', component: DashboardUserComponent },
     { path: 'user/:id', component: EditUserComponent },
 ];
