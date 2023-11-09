@@ -6,8 +6,8 @@ import { WeatherComponent } from "./weather/weather.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { EditUserComponent } from "./edit-user/edit-user.component";
 import { DashboardUserComponent } from "./dashboard-user/dashboard-user.component";
-import { AdminGuard } from "./admin.guard";
-import { UserGuard } from "./user.guard";
+import { AdminGuard } from "./authentication/admin.guard";
+import { UserGuard } from "./authentication/user.guard";
 const routes: Routes = [ // Use a colon (:) to declare the type of 'routes'
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignupComponent },

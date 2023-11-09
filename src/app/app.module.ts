@@ -24,8 +24,8 @@ import { EditSuccessComponent } from './edit-success/edit-success.component';
 import { SuccessLoginComponent } from './success-login/success-login.component';
 import { DashboardUserComponent } from './dashboard-user/dashboard-user.component';
 import { AuthService } from './auth.service';
-import { UserGuard } from './user.guard';
-import { AdminGuard } from './admin.guard';
+import { UserGuard } from './authentication/user.guard';
+import { AdminGuard } from './authentication/admin.guard';
 
 @NgModule({
   declarations: [
