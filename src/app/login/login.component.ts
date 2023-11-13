@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SuccessDialogComponent } from '../success-dialog/success-dialog.component';
 import { UnsuccessDialogComponent } from '../unsuccess-dialog/unsuccess-dialog.component';
@@ -16,22 +16,26 @@ interface LoginResponse {
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements  OnInit {
   constructor(
     private http: HttpClient,
     private dialog: MatDialog,
     private router: Router,
     private cookieService: CookieService
   ) {}
-
   ngOnInit(): void {
-    this.email = this.decryptFromSessionStorage('email');
-    this.password = this.decryptFromSessionStorage('password');
+    console.log('ngOnInit is called.');
+    console.log('checking storage');
+    const encryptedEmail = sessionStorage.getItem('email');
+    const encryptedPassword = sessionStorage.getItem('password');
+    if (encryptedEmail && encryptedPassword) {
+      this.router.navigate(['/dashboardUser']);
+    }
   }
 
   email: any = '';
   password: any = '';
-  secretKey: any = 'YourSecretKey'; // Replace with a more secure method to manage secret keys
+  secretKey: any = 'YourSecretKey'; 
 
   confirmUsers() {
     const userData = { email: this.email, password: this.password };

@@ -9,17 +9,26 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  currentUserId:string | undefined;
-  arraylist: any = []; // Declare as an array of any
-  constructor(private https: HttpClient, private cookieService: CookieService) {}
+  currentUserId: string | undefined;
+  arraylist: any[] = [];
+  isAdmin: boolean = false;
+  constructor(private http: HttpClient, private cookieService: CookieService) {}
   ngOnInit(): void {
     const token = this.cookieService.get('token');
-    const tokenPayload = jwtDecode<any>(token); // You might need to install the jwt-decode library
-    this.currentUserId = tokenPayload._id
+    const tokenPayload = jwtDecode<any>(token);
+    this.currentUserId = tokenPayload._id;
+    this.isAdmin = this.checkAdmin();
+    this.getUsers();
   }
-  getUsers(){
-    this.https.get('http://localhost:3000/getApi').subscribe(
-      (response) => { // Specify the type as an array of any
+  checkAdmin(): boolean {
+    const token = this.cookieService.get('token');
+    const tokenPayload = jwtDecode<any>(token);
+    return tokenPayload.role === 'admin';
+  }
+
+  getUsers(): void {
+    this.http.get<any[]>('http://localhost:3000/getApi').subscribe(
+      (response) => {
         this.arraylist = response;
       },
       (error) => {
@@ -27,23 +36,23 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
-  deleteUser(id: string) {
-    this.https.delete(`http://localhost:3000/deleteUser/${id}`).subscribe(
-      (response: any) => {
-        console.log('User deleted successfully:', response);
-        // Refresh the user list after successful deletion
-        // this.getUsers();
-        this.arraylist = this.arraylist.filter((user: any) => user._id !== id);
+
+  deleteUser(id: string): void {
+    this.http.delete(`http://localhost:3000/deleteUser/${id}`).subscribe(
+      () => {
+        console.log('User deleted successfully');
+        this.arraylist = this.arraylist.filter((user) => user._id !== id);
       },
       (error) => {
-        // console.error('Error:', error);
+        console.error('Error:', error);
       }
     );
   }
-  updateUser(id1: string, data: any) {
-    this.https.put(`http://localhost:3000/updateUser/${id1}`, data).subscribe(
-      (response) => {
-        console.log('Success update');
+
+  updateUser(id: string, data: any): void {
+    this.http.put(`http://localhost:3000/updateUser/${id}`, data).subscribe(
+      () => {
+        console.log('User updated successfully');
         this.getUsers();
       },
       (error) => {
@@ -51,5 +60,4 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
-  
 }
