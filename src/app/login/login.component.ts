@@ -5,29 +5,33 @@ import { SuccessDialogComponent } from '../success-dialog/success-dialog.compone
 import { UnsuccessDialogComponent } from '../unsuccess-dialog/unsuccess-dialog.component';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-
+import * as CryptoJS from 'crypto-js';
 // Define an interface for the response structure
 interface LoginResponse {
   message: string;
   token: string;
 }
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-
 export class LoginComponent implements OnInit {
-  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router, private cookieService: CookieService) {}
+  constructor(
+    private http: HttpClient,
+    private dialog: MatDialog,
+    private router: Router,
+    private cookieService: CookieService
+  ) {}
 
   ngOnInit(): void {
-    this.email = sessionStorage.getItem('email');
-    this.password = sessionStorage.getItem('password');
+    this.email = this.decryptFromSessionStorage('email');
+    this.password = this.decryptFromSessionStorage('password');
   }
-  
+
   email: any = '';
   password: any = '';
+  secretKey: any = 'YourSecretKey'; // Replace with a more secure method to manage secret keys
 
   confirmUsers() {
     const userData = { email: this.email, password: this.password };
@@ -37,8 +41,10 @@ export class LoginComponent implements OnInit {
         let token = response.token;
         this.cookieService.set('token', token);
         // Save email and password to sessionStorage
-        sessionStorage.setItem('email', this.email);
-        sessionStorage.setItem('password', this.password);
+        const encryptedEmail = CryptoJS.AES.encrypt(this.email, this.secretKey).toString();
+        const encryptedPassword = CryptoJS.AES.encrypt(this.password, this.secretKey).toString();
+        sessionStorage.setItem('email', encryptedEmail);
+        sessionStorage.setItem('password', encryptedPassword);
         this.openSuccessDialog();
         this.router.navigate(['/dashboardUser']);
       },
@@ -55,5 +61,15 @@ export class LoginComponent implements OnInit {
 
   openUnSuccessDialog() {
     const dialogRef = this.dialog.open(UnsuccessDialogComponent);
+  }
+
+  // Helper function to decrypt values from sessionStorage
+  decryptFromSessionStorage(key: string): string {
+    const encryptedValue = sessionStorage.getItem(key);
+    if (encryptedValue) {
+      const decryptedValue = CryptoJS.AES.decrypt(encryptedValue, this.secretKey).toString(CryptoJS.enc.Utf8);
+      return decryptedValue;
+    }
+    return '';
   }
 }

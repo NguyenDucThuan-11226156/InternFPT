@@ -20,6 +20,7 @@ export class AdminGuard implements CanActivate {
     } else {
       // Redirect to the login page if the user's role is not allowed
       alert('You dont have permission')
+      this.router.navigate(['/dashboardUser']);
 
       return false;
     }

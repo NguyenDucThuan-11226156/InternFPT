@@ -9,7 +9,6 @@ app.use(cookieParser())
 const mongoose = require('mongoose');
 var jwt = require('jsonwebtoken');
 const { Schema } = mongoose; // Import the Schema object
-app.use(cors());
 // Set up CORS middleware
 const corsOptions = {
   origin: 'http://localhost:4200', // Replace with the actual origin of your frontend application
@@ -136,6 +135,7 @@ app.post('/register', async (req, res) => {
   res.json({ message: 'Received data on the server' });
 });
 app.get('/getApi', async (req, res) => {
+  
   Users.find({})
     .then(data => {
       res.json(data); // Send the data to the frontend as a JSON response

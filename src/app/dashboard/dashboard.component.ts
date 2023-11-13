@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit {
     const tokenPayload = jwtDecode<any>(token); // You might need to install the jwt-decode library
     this.currentUserId = tokenPayload._id
   }
-  getUsers() {
+  getUsers(){
     this.https.get('http://localhost:3000/getApi').subscribe(
       (response) => { // Specify the type as an array of any
         this.arraylist = response;
