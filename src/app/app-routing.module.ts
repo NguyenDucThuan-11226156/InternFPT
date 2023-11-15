@@ -14,7 +14,7 @@ const routes: Routes = [ // Use a colon (:) to declare the type of 'routes'
     { path: '', redirectTo:'login', pathMatch:'full'},
     { path: 'weather', component: WeatherComponent },
     // { path: 'dashboard', component: DashboardComponent },
-    { path: 'dashboardUser', component: DashboardComponent },
+    { path: 'dashboardUser', component: DashboardComponent, canActivate: [UserGuard] },
     { path: 'user/:id', component: EditUserComponent },
 ];
 @NgModule({

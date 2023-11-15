@@ -4,6 +4,7 @@ import { EmailValidator, FormBuilder, Validators } from '@angular/forms';
 import { SuccessLoginComponent } from '../success-login/success-login.component';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from '../login/login.component';
+import { Route, Router } from '@angular/router';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -13,7 +14,7 @@ export class SignupComponent {
   email: any = '';
   username: any = '';
   password: any = '';
-  constructor(private http: HttpClient, private fb: FormBuilder, private dialog:MatDialog) {}
+  constructor(private http: HttpClient, private fb: FormBuilder, private dialog:MatDialog, private router:Router) {}
   infoUser = this.fb.group({
     "username":[""],
     "email":["",[Validators.email,Validators.required]],
@@ -42,7 +43,8 @@ export class SignupComponent {
     );
   }
   openSuccessRegisterDialog() {
-    const dialogRef = this.dialog.open(LoginComponent);
+    // const dialogRef = this.dialog.open(LoginComponent);
+    this.router.navigate(['/login'])
     // Optionally, you can handle events from the dialog, such as when it's closed
   }
 

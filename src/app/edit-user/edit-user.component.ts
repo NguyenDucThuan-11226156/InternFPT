@@ -21,10 +21,12 @@ export class EditUserComponent {
     });
   }
   id = this.route.snapshot.paramMap.get('id');
+  email:any='';
   password:any='';
   editUser(){
+    this.email = this.userForm.get('email')?.value ||'';
     this.password = this.userForm.get('password')?.value ||'';
-    const userData ={password:this.password, id:this.id};
+    const userData ={password:this.password, id:this.id, email:this.email};
     this.http.put(`http://localhost:3000/userEdit/${this.id}`, userData).subscribe(
       (response) => {
         // Handle the response from the server (e.g., registration success or failure)

@@ -16,6 +16,7 @@ interface LoginResponse {
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
+
 export class LoginComponent implements  OnInit {
   constructor(
     private http: HttpClient,
@@ -28,15 +29,14 @@ export class LoginComponent implements  OnInit {
     console.log('checking storage');
     const encryptedEmail = sessionStorage.getItem('email');
     const encryptedPassword = sessionStorage.getItem('password');
-    if (encryptedEmail && encryptedPassword) {
+    const check = this.cookieService.get('token')
+    if (encryptedEmail && encryptedPassword || check) {
       this.router.navigate(['/dashboardUser']);
     }
   }
-
   email: any = '';
   password: any = '';
   secretKey: any = 'YourSecretKey'; 
-
   confirmUsers() {
     const userData = { email: this.email, password: this.password };
     this.http.post<LoginResponse>('http://localhost:3000/login', userData).subscribe(
@@ -44,7 +44,6 @@ export class LoginComponent implements  OnInit {
         console.log('response:', response);
         let token = response.token;
         this.cookieService.set('token', token);
-        // Save email and password to sessionStorage
         const encryptedEmail = CryptoJS.AES.encrypt(this.email, this.secretKey).toString();
         const encryptedPassword = CryptoJS.AES.encrypt(this.password, this.secretKey).toString();
         sessionStorage.setItem('email', encryptedEmail);
@@ -62,11 +61,9 @@ export class LoginComponent implements  OnInit {
   openSuccessDialog() {
     const dialogRef = this.dialog.open(SuccessDialogComponent);
   }
-
   openUnSuccessDialog() {
     const dialogRef = this.dialog.open(UnsuccessDialogComponent);
   }
-
   // Helper function to decrypt values from sessionStorage
   decryptFromSessionStorage(key: string): string {
     const encryptedValue = sessionStorage.getItem(key);

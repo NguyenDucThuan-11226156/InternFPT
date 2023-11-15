@@ -9,6 +9,10 @@
 <body>
   <form (ngSubmit)="editUser()" [formGroup]="userForm">
     <div class="mb-3">
+      <label for="exampleInputEmail" class="form-label">Email</label>
+      <input type="email" class="form-control" id="exampleInputEmail" formControlName="email">
+    </div>
+    <div class="mb-3">
       <label for="exampleInputPassword1" class="form-label">Password</label>
       <input type="password" class="form-control" id="exampleInputPassword1" formControlName="password">
     </div>
@@ -18,5 +22,5 @@
     </div>
     <button type="submit" class="btn btn-primary">Edit</button>
   </form>
-  <button class="btn btn-secondary" routerLink="/dashboard">Dashboard</button>
+  <button class="btn btn-secondary" routerLink="/dashboardUser">Dashboard</button>
 </body>

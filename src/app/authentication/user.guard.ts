@@ -18,7 +18,7 @@ export class UserGuard implements CanActivate {
       return true;
     } else {
       // this.router.navigate(['/login']); // Redirect to the login page if the user's role is not allowed
-      alert('You dont have permission')
+      alert('Pls log in')
       return false;
     }
   }
